@@ -1,19 +1,23 @@
 # react-native-video-processor
-video processing functions
+Video processing functions
 ## Installation
 
 ```sh
-npm install react-native-video-processor
+yarn add @salihgun/react-native-video-processor
+```
+
+or
+```sh
+npm install @salihgun/react-native-video-processor
 ```
 
 ## Usage
 
 ```js
-import { multiply } from "react-native-video-processor";
+import { getVideoInfo } from 'react-native-video-processor';
 
-// ...
 
-const result = await multiply(3, 7);
+const result = await getVideoInfo(videoPath);
 ```
 
 ## Contributing
