@@ -1,5 +1,5 @@
 {
-  "name": "react-native-video-processor",
+  "name": "@salihgun/react-native-video-processor",
   "version": "0.1.0",
   "description": "test",
   "main": "lib/commonjs/index",
@@ -75,6 +75,7 @@
     "@types/react": "17.0.21"
   },
   "peerDependencies": {
+    "ffmpeg-kit-react-native": "^5.1.0",
     "react": "*",
     "react-native": "*"
   },
