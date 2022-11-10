@@ -1,21 +1,15 @@
 import { FFmpegKit, FFprobeKit } from 'ffmpeg-kit-react-native';
-import type { VideoInfoType } from 'src/types/VideoInfoType';
-
-async function getVideoInfo(path: string): Promise<VideoInfoType> {
+async function getVideoInfo(path) {
   const command = `-i ${path} -v quiet -print_format json -show_format -show_streams`;
   const response = await FFprobeKit.execute(command);
   const output = await JSON.parse(await response.getOutput());
-  const videoInfo: VideoInfoType = {
+  const videoInfo = {
     duration: +output.format.duration,
     creationDate: output.format.tags.creation_time,
   };
   return videoInfo;
 }
-
-async function getVideoThumbnail(
-  path: string,
-  fps: number = 3
-): Promise<string> {
+async function getVideoThumbnail(path, fps = 3) {
   const command = `-i ${path} -vf fps=${fps} ${path.replace(
     '.mp4',
     '_'
@@ -24,19 +18,12 @@ async function getVideoThumbnail(
   const thumnailPath = path.replace('.mp4', '_thumb_1.jpg');
   return thumnailPath;
 }
-
-async function trimVideo(
-  path: string,
-  startTime: string,
-  duration: string,
-  outputPath: string
-): Promise<string> {
+async function trimVideo(path, startTime, duration, outputPath) {
   const command = `-y -i ${path} -ss ${startTime} -t ${duration} ${outputPath}`;
   await FFmpegKit.execute(command);
   return outputPath;
 }
-
-async function createFrames(path: string, fps: number = 3): Promise<string> {
+async function createFrames(path, fps = 3) {
   const command = `-i ${path} -vf fps=${fps} ${path.replace(
     '.mp4',
     '_'
@@ -44,5 +31,4 @@ async function createFrames(path: string, fps: number = 3): Promise<string> {
   await FFmpegKit.execute(command);
   return `${path.replace('.mp4', '_')}thumb_`;
 }
-
 export { getVideoInfo, getVideoThumbnail, trimVideo, createFrames };
