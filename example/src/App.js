@@ -26,6 +26,14 @@ export default function App() {
   const [videoInfo, setVideoInfo] = React.useState({
     duration: 0,
     creationDate: '',
+    size: 0,
+    width: 0,
+    height: 0,
+    bit_rate: 0,
+    codec_name: '',
+    codec_type: '',
+    sample_aspect_ratio: '',
+    frame_rate: '',
   });
   const [thumbnail, setThumbnail] = React.useState('');
   const [startTime, setStartTime] = React.useState('');
@@ -113,6 +121,13 @@ export default function App() {
         { style: styles.text },
         'Creation Date: ',
         videoInfo.creationDate
+      ),
+      React.createElement(
+        Text,
+        { style: styles.text },
+        'Size: ',
+        videoInfo.size,
+        ' bytes'
       ),
       React.createElement(Text, { style: styles.title }, 'Thumbnail'),
       thumbnail !== '' &&

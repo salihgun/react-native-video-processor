@@ -27,6 +27,14 @@ export default function App() {
   const [videoInfo, setVideoInfo] = React.useState<VideoInfoType>({
     duration: 0,
     creationDate: '',
+    size: 0,
+    width: 0,
+    height: 0,
+    bit_rate: 0,
+    codec_name: '',
+    codec_type: '',
+    sample_aspect_ratio: '',
+    frame_rate: '',
   });
   const [thumbnail, setThumbnail] = React.useState<string>('');
   const [startTime, setStartTime] = React.useState<string>('');
@@ -103,6 +111,7 @@ export default function App() {
           Duration: {videoInfo.duration.toFixed(2)} seconds
         </Text>
         <Text style={styles.text}>Creation Date: {videoInfo.creationDate}</Text>
+        <Text style={styles.text}>Size: {videoInfo.size} bytes</Text>
         <Text style={styles.title}>Thumbnail</Text>
         {thumbnail !== '' && (
           <Image style={styles.thumbnail} source={{ uri: thumbnail }} />

@@ -55,7 +55,15 @@ const result = await getVideoInfo(videoPath)
 //example result
 // result = {
 //  duration: 4.5,
-//  creationDate: "2022-11-11T19:08:08.547Z"
+//  creationDate: "2022-11-11T19:08:08.547Z",
+//  size: 496145 bytes,
+//  bit_rate: 882035,
+//  width: 320,
+//  height: 568,
+//  frame_rate: "30/1",
+//  codec_name: "h264",
+//  codec_type: "video",
+//  sample_aspect_radio: "1:1",
 // }
 ```
 

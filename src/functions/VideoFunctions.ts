@@ -8,6 +8,14 @@ async function getVideoInfo(path: string): Promise<VideoInfoType> {
   const videoInfo: VideoInfoType = {
     duration: +output.format.duration,
     creationDate: output.format.tags.creation_time,
+    size: +output.format.size,
+    bit_rate: +output.format.bit_rate,
+    width: +output.streams[1].width,
+    height: +output.streams[1].height,
+    frame_rate: output.streams[1].avg_frame_rate,
+    codec_name: output.streams[1].codec_name,
+    codec_type: output.streams[1].codec_type,
+    sample_aspect_ratio: output.streams[1].sample_aspect_ratio,
   };
   return videoInfo;
 }
