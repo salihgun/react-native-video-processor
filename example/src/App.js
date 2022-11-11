@@ -17,7 +17,7 @@ import {
   getVideoThumbnail,
   trimVideo,
   createFrames,
-} from 'react-native-video-processor';
+} from '@salihgun/react-native-video-processor';
 import ImagePicker from 'react-native-image-crop-picker';
 import Video from 'react-native-video';
 import moment from 'moment';

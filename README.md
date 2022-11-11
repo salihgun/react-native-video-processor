@@ -14,7 +14,7 @@ npm install @salihgun/react-native-video-processor
 ## Usage
 
 ```js
-import { getVideoInfo } from 'react-native-video-processor';
+import { getVideoInfo } from '@salihgun/react-native-video-processor';
 
 
 const result = await getVideoInfo(videoPath);

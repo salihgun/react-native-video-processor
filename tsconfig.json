@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-video-processor": ["./src/index"]
+      "@salihgun/react-native-video-processor": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
