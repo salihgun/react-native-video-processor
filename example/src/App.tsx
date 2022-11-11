@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {
   getVideoInfo,
-  getVideoThumbnail,
+  createThumbnail,
   trimVideo,
   createFrames,
   VideoInfoType,
@@ -41,7 +41,7 @@ export default function App() {
     });
     setLoading(true);
     const videoInfoResponse = await getVideoInfo(video.path);
-    const videoThumbnail = await getVideoThumbnail(video.path);
+    const videoThumbnail = await createThumbnail(video.path);
     const framePath = await createFrames(video.path, 5);
 
     const secondDotIndex = video.path.lastIndexOf('.');

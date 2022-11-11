@@ -1,6 +1,6 @@
 export {
   getVideoInfo,
-  getVideoThumbnail,
+  createThumbnail,
   trimVideo,
   createFrames,
 } from './functions/VideoFunctions';

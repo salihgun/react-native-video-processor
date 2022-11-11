@@ -12,10 +12,7 @@ async function getVideoInfo(path: string): Promise<VideoInfoType> {
   return videoInfo;
 }
 
-async function getVideoThumbnail(
-  path: string,
-  fps: number = 3
-): Promise<string> {
+async function createThumbnail(path: string, fps: number = 3): Promise<string> {
   const command = `-i ${path} -vf fps=${fps} ${path.replace(
     '.mp4',
     '_'
@@ -45,4 +42,4 @@ async function createFrames(path: string, fps: number = 3): Promise<string> {
   return `${path.replace('.mp4', '_')}thumb_`;
 }
 
-export { getVideoInfo, getVideoThumbnail, trimVideo, createFrames };
+export { getVideoInfo, createThumbnail, trimVideo, createFrames };

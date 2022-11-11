@@ -9,7 +9,7 @@ async function getVideoInfo(path) {
   };
   return videoInfo;
 }
-async function getVideoThumbnail(path, fps = 3) {
+async function createThumbnail(path, fps = 3) {
   const command = `-i ${path} -vf fps=${fps} ${path.replace(
     '.mp4',
     '_'
@@ -31,4 +31,4 @@ async function createFrames(path, fps = 3) {
   await FFmpegKit.execute(command);
   return `${path.replace('.mp4', '_')}thumb_`;
 }
-export { getVideoInfo, getVideoThumbnail, trimVideo, createFrames };
+export { getVideoInfo, createThumbnail, trimVideo, createFrames };
