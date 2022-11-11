@@ -92,6 +92,29 @@ const outputPath = `${newPath}-trimmed.mp4`;
 const clippedVideoPath = await trimVideo(videoPath, startsAt, durationAt, outputPath);
 ```
 
+- Create frames of video
+
+```js
+import { createFrames } from '@salihgun/react-native-video-processor'
+
+//createFrames function has two parameters. Video path and an optional fps value which is default 1
+const framesPath = await createFrames(videoPath, 3) // fps = 3
+
+//render method
+ <ScrollView horizontal>
+    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => {
+        return (
+            <Image
+                key={index}
+                style={styles.frame}
+                source={{ uri: `${framesPath}${index + 1}.jpg` }}
+            />
+        );
+    })}
+ </ScrollView>
+ 
+```
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
