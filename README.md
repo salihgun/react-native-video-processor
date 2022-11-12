@@ -1,4 +1,4 @@
-# react-native-video-processor
+# @salihgun/react-native-video-processor
 
 Video processing functions using [@ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit)
 
