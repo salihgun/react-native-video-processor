@@ -5,8 +5,16 @@
 Video processing functions using [@ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit)
 
 
-
+## Preview
 https://user-images.githubusercontent.com/47421572/201497525-aa8b1a2e-b461-48b3-ac08-cc480ae37c0f.mp4
+
+
+## Table of contents
+
+*  [Installation](#installation)
+*  [Usage](#usage)
+*  [Contributing](#contributing)
+*  [License](#license)
 
 
 
