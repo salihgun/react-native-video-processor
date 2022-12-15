@@ -91,8 +91,8 @@ const thumbnailPath = await createThumbnail(videoPath)
 ```js
 import { trimVideo } from '@salihgun/react-native-video-processor'
 
-const [startTime, setStartTime] = React.useState < string > ''
-const [duration, setDuration] = React.useState < string > ''
+const [startTime, setStartTime] = React.useState<string>('');
+const [duration, setDuration] = React.useState<string>('');
 
 const clippedVideo = await trimVideo(video?.path, startTime, duration)
 ```
