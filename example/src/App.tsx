@@ -7,7 +7,6 @@ import {
   Image,
   TextInput,
   ScrollView,
-  Platform,
   Modal,
   ActivityIndicator,
   Dimensions,
@@ -18,10 +17,12 @@ import {
   trimVideo,
   createFrames,
   VideoInfoType,
+  reverseVideo,
+  concatVideos,
+  boomerang,
 } from '@salihgun/react-native-video-processor';
 import ImagePicker from 'react-native-image-crop-picker';
 import Video from 'react-native-video';
-import moment from 'moment';
 const width = Dimensions.get('window').width;
 export default function App() {
   const [videoInfo, setVideoInfo] = React.useState<VideoInfoType>({
@@ -41,39 +42,40 @@ export default function App() {
   const [duration, setDuration] = React.useState<string>('');
   const [videoPath, setVideoPath] = React.useState<string>('');
   const [framesPath, setFramesPath] = React.useState<string>('');
+  const [reversedVideoPath, setReversedVideoPath] = React.useState<string>('');
+  const [mergedVideoPath, setMergedVideoPath] = React.useState<string>('');
+  const [boomerangVideoPath, setBoomerangVideoPath] =
+    React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const onPickVideo = async () => {
     const video = await ImagePicker.openPicker({
       mediaType: 'video',
+      multiple: false,
     });
     setLoading(true);
-    const videoInfoResponse = await getVideoInfo(video.path);
+    const videoInfoResponse = await getVideoInfo(video?.path);
     const videoThumbnail = await createThumbnail(video.path);
     const framePath = await createFrames(video.path, 5);
 
-    const secondDotIndex = video.path.lastIndexOf('.');
-    const newPath = Platform.select({
-      ios: video.path.split('.')[0],
-      android: video.path.substring(0, secondDotIndex),
-    }) as string;
-    const outputPath = `${newPath}-trimmed.mp4`;
-
-    const startsAt = moment()
-      .startOf('day')
-      .second(+startTime)
-      .format('HH:mm:ss');
-    const durationAt = moment()
-      .startOf('day')
-      .second(+duration)
-      .format('HH:mm:ss');
-
     const clippedVideo = await trimVideo(
-      video.path,
-      startsAt,
-      durationAt,
-      outputPath
+      video?.path as string,
+      startTime,
+      duration
     );
+
+    const reversedVideo = await reverseVideo(clippedVideo);
+    const mergedVideo = await concatVideos(
+      video?.path as string,
+      video?.path as string,
+      'merged'
+    );
+
+    const boomerangVideo = await boomerang(video?.path as string as string);
+
+    setBoomerangVideoPath(boomerangVideo);
+    setMergedVideoPath(mergedVideo);
+    setReversedVideoPath(reversedVideo);
     setVideoPath(clippedVideo);
     setThumbnail(videoThumbnail);
     setVideoInfo(videoInfoResponse);
@@ -106,7 +108,6 @@ export default function App() {
             onChangeText={setDuration}
           />
         </View>
-
         <Text style={styles.text}>
           Duration: {videoInfo.duration.toFixed(2)} seconds
         </Text>
@@ -142,6 +143,36 @@ export default function App() {
               );
             })}
           </ScrollView>
+        )}
+        <Text style={styles.title}>Reversed Video</Text>
+        {reversedVideoPath !== '' && (
+          <Video
+            source={{ uri: reversedVideoPath }}
+            style={styles.video}
+            resizeMode="contain"
+            paused={false}
+            repeat={true}
+          />
+        )}
+        <Text style={styles.title}>Merged Video</Text>
+        {mergedVideoPath !== '' && (
+          <Video
+            source={{ uri: mergedVideoPath }}
+            style={styles.video}
+            resizeMode="contain"
+            paused={false}
+            repeat={true}
+          />
+        )}
+        <Text style={styles.title}>Boomerang Video</Text>
+        {boomerangVideoPath !== '' && (
+          <Video
+            source={{ uri: boomerangVideoPath }}
+            style={styles.video}
+            resizeMode="contain"
+            paused={false}
+            repeat={true}
+          />
         )}
       </ScrollView>
       <Modal transparent visible={loading}>
@@ -184,7 +215,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
   },
-  input: { paddingHorizontal: 20 },
+  input: { paddingHorizontal: 20, paddingVertical: 10 },
   video: {
     width: 200,
     height: 200,

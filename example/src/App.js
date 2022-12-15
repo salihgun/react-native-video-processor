@@ -7,7 +7,6 @@ import {
   Image,
   TextInput,
   ScrollView,
-  Platform,
   Modal,
   ActivityIndicator,
   Dimensions,
@@ -17,10 +16,12 @@ import {
   createThumbnail,
   trimVideo,
   createFrames,
+  reverseVideo,
+  concatVideos,
+  boomerang,
 } from '@salihgun/react-native-video-processor';
 import ImagePicker from 'react-native-image-crop-picker';
 import Video from 'react-native-video';
-import moment from 'moment';
 const width = Dimensions.get('window').width;
 export default function App() {
   const [videoInfo, setVideoInfo] = React.useState({
@@ -40,35 +41,26 @@ export default function App() {
   const [duration, setDuration] = React.useState('');
   const [videoPath, setVideoPath] = React.useState('');
   const [framesPath, setFramesPath] = React.useState('');
+  const [reversedVideoPath, setReversedVideoPath] = React.useState('');
+  const [mergedVideoPath, setMergedVideoPath] = React.useState('');
+  const [boomerangVideoPath, setBoomerangVideoPath] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const onPickVideo = async () => {
     const video = await ImagePicker.openPicker({
       mediaType: 'video',
+      multiple: false,
     });
     setLoading(true);
-    const videoInfoResponse = await getVideoInfo(video.path);
+    const videoInfoResponse = await getVideoInfo(video?.path);
     const videoThumbnail = await createThumbnail(video.path);
     const framePath = await createFrames(video.path, 5);
-    const secondDotIndex = video.path.lastIndexOf('.');
-    const newPath = Platform.select({
-      ios: video.path.split('.')[0],
-      android: video.path.substring(0, secondDotIndex),
-    });
-    const outputPath = `${newPath}-trimmed.mp4`;
-    const startsAt = moment()
-      .startOf('day')
-      .second(+startTime)
-      .format('HH:mm:ss');
-    const durationAt = moment()
-      .startOf('day')
-      .second(+duration)
-      .format('HH:mm:ss');
-    const clippedVideo = await trimVideo(
-      video.path,
-      startsAt,
-      durationAt,
-      outputPath
-    );
+    const clippedVideo = await trimVideo(video?.path, startTime, duration);
+    const reversedVideo = await reverseVideo(clippedVideo);
+    const mergedVideo = await concatVideos(video?.path, video?.path, 'merged');
+    const boomerangVideo = await boomerang(video?.path);
+    setBoomerangVideoPath(boomerangVideo);
+    setMergedVideoPath(mergedVideo);
+    setReversedVideoPath(reversedVideo);
     setVideoPath(clippedVideo);
     setThumbnail(videoThumbnail);
     setVideoInfo(videoInfoResponse);
@@ -159,7 +151,34 @@ export default function App() {
               source: { uri: `${framesPath}${index + 1}.jpg` },
             });
           })
-        )
+        ),
+      React.createElement(Text, { style: styles.title }, 'Reversed Video'),
+      reversedVideoPath !== '' &&
+        React.createElement(Video, {
+          source: { uri: reversedVideoPath },
+          style: styles.video,
+          resizeMode: 'contain',
+          paused: false,
+          repeat: true,
+        }),
+      React.createElement(Text, { style: styles.title }, 'Merged Video'),
+      mergedVideoPath !== '' &&
+        React.createElement(Video, {
+          source: { uri: mergedVideoPath },
+          style: styles.video,
+          resizeMode: 'contain',
+          paused: false,
+          repeat: true,
+        }),
+      React.createElement(Text, { style: styles.title }, 'Boomerang Video'),
+      boomerangVideoPath !== '' &&
+        React.createElement(Video, {
+          source: { uri: boomerangVideoPath },
+          style: styles.video,
+          resizeMode: 'contain',
+          paused: false,
+          repeat: true,
+        })
     ),
     React.createElement(
       Modal,
@@ -203,7 +222,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
   },
-  input: { paddingHorizontal: 20 },
+  input: { paddingHorizontal: 20, paddingVertical: 10 },
   video: {
     width: 200,
     height: 200,
