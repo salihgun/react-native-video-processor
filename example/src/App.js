@@ -56,7 +56,7 @@ export default function App() {
     const framePath = await createFrames(video.path, 5);
     const clippedVideo = await trimVideo(video?.path, startTime, duration);
     const reversedVideo = await reverseVideo(clippedVideo);
-    const mergedVideo = await concatVideos(video?.path, video?.path, 'merged');
+    const mergedVideo = await concatVideos(video?.path, video?.path);
     const boomerangVideo = await boomerang(video?.path);
     setBoomerangVideoPath(boomerangVideo);
     setMergedVideoPath(mergedVideo);
