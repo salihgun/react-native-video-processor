@@ -1,22 +1,17 @@
 # @salihgun/react-native-video-processor
 
-
-
 Video processing functions using [@ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit)
 
-
 ## Preview
-https://user-images.githubusercontent.com/47421572/201497525-aa8b1a2e-b461-48b3-ac08-cc480ae37c0f.mp4
 
+https://user-images.githubusercontent.com/47421572/201497525-aa8b1a2e-b461-48b3-ac08-cc480ae37c0f.mp4
 
 ## Table of contents
 
-*  [Installation](#installation)
-*  [Usage](#usage)
-*  [Contributing](#contributing)
-*  [License](#license)
-
-
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Installation
 
@@ -94,26 +89,12 @@ const thumbnailPath = await createThumbnail(videoPath)
 - Trim video
 
 ```js
-import { trimVideo } from '@salihgun/react-native-video-processor';
+import { trimVideo } from '@salihgun/react-native-video-processor'
 
-const [startTime, setStartTime] = React.useState<string>('');
-const [duration, setDuration] = React.useState<string>('');
+const [startTime, setStartTime] = React.useState < string > ''
+const [duration, setDuration] = React.useState < string > ''
 
-//Convert variables to HH:mm:ss format
-const startsAt = moment().startOf('day').second(+startTime).format('HH:mm:ss');
-const durationAt = moment().startOf('day').second(+duration).format('HH:mm:ss');
-
-//Parse video path (Used ImagePicker library => react-native-image-crop-picker)
-const secondDotIndex = video.path.lastIndexOf('.'); // Android path has double dot, need to parse it
-
-const newPath = Platform.select({
-      ios: video.path.split('.')[0],
-      android: video.path.substring(0, secondDotIndex),
-    }) as string;
-
-const outputPath = `${newPath}-trimmed.mp4`;
-
-const clippedVideoPath = await trimVideo(videoPath, startsAt, durationAt, outputPath);
+const clippedVideo = await trimVideo(video?.path, startTime, duration)
 ```
 
 - Create frames of video
@@ -136,7 +117,37 @@ const framesPath = await createFrames(videoPath, 3) // fps = 3
         );
     })}
  </ScrollView>
- 
+
+```
+
+- Reverse video
+
+```js
+import { reverseVideo } from '@salihgun/react-native-video-processor'
+
+const reversedVideo = await reverseVideo(video.path)
+
+```
+
+- Concat videos
+
+```js
+import { concatVideos } from '@salihgun/react-native-video-processor';
+
+//***IMPORTANT***
+//Video sizes,formats must be same for now otherwise it won't work!
+//Also supports only 2 videos for now!
+const mergedVideo = await concatVideos(videoPath1,videoPath2);
+
+```
+
+- Boomerang video
+
+```js
+import { boomerang } from '@salihgun/react-native-video-processor'
+
+const boomerangVideo = await boomerang(video.path)
+
 ```
 
 ## Contributing
