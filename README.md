@@ -4,8 +4,6 @@ Video processing functions using [@ffmpeg-kit](https://github.com/arthenica/ffmp
 
 ## Preview
 
-https://user-images.githubusercontent.com/47421572/201497525-aa8b1a2e-b461-48b3-ac08-cc480ae37c0f.mp4
-
 ## Table of contents
 
 - [Installation](#installation)
@@ -56,10 +54,15 @@ pod 'ffmpeg-kit-react-native', :subspecs => ['full-gpl-lts'], :podspec => '../no
 
 ## Usage
 
-- Video Info
+<p align="center">Video Info</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/207990236-dc080b28-ef07-4b2b-8c4b-93e20e560ffb.gif" alt="animated" />
+</p>
 
 ```js
 import { getVideoInfo } from '@salihgun/react-native-video-processor'
+
 
 const result = await getVideoInfo(videoPath)
 
@@ -78,7 +81,11 @@ const result = await getVideoInfo(videoPath)
 // }
 ```
 
-- Create thumbnail
+<p align="center">Create Thumbnail</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/207992898-5ae3e11a-779d-46e4-9b0d-79269ada5724.gif" alt="animated" />
+</p>
 
 ```js
 import { createThumbnail } from '@salihgun/react-native-video-processor'
@@ -86,7 +93,12 @@ import { createThumbnail } from '@salihgun/react-native-video-processor'
 const thumbnailPath = await createThumbnail(videoPath)
 ```
 
-- Trim video
+
+<p align="center">Trim Video</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/207992962-2a2ddd1f-14d5-43a5-8753-c19785791a6f.gif" alt="animated" />
+</p>
 
 ```js
 import { trimVideo } from '@salihgun/react-native-video-processor'
@@ -97,7 +109,11 @@ const [duration, setDuration] = React.useState<string>('');
 const clippedVideo = await trimVideo(video?.path, startTime, duration)
 ```
 
-- Create frames of video
+<p align="center">Create Frames of a Video</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/207993033-b5e1ac96-556a-46e6-969e-33b1c9e5c719.gif" alt="animated" />
+</p>
 
 ```js
 import { createFrames } from '@salihgun/react-native-video-processor'
@@ -120,7 +136,11 @@ const framesPath = await createFrames(videoPath, 3) // fps = 3
 
 ```
 
-- Reverse video
+<p align="center">Reverse Video</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/207993117-96db9881-2f44-47b7-abe1-e8eed40ff70f.gif" alt="animated" />
+</p>
 
 ```js
 import { reverseVideo } from '@salihgun/react-native-video-processor'
@@ -129,7 +149,11 @@ const reversedVideo = await reverseVideo(video.path)
 
 ```
 
-- Concat videos
+<p align="center">Concat Videos</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/207993209-39fd297d-bf04-4cc6-8832-641c6d32d056.gif" alt="animated" />
+</p>
 
 ```js
 import { concatVideos } from '@salihgun/react-native-video-processor';
@@ -141,7 +165,11 @@ const mergedVideo = await concatVideos(videoPath1,videoPath2);
 
 ```
 
-- Boomerang video
+<p align="center">Boomerang Video</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/207993269-a2c35cf0-71e2-4911-a76e-5a94f5f5e128.gif" alt="animated" />
+</p>
 
 ```js
 import { boomerang } from '@salihgun/react-native-video-processor'
