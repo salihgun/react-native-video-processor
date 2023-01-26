@@ -61,12 +61,12 @@ pod 'ffmpeg-kit-react-native', :subspecs => ['full-gpl-lts'], :podspec => '../no
 </p>
 
 ```js
-import { getVideoInfo } from '@salihgun/react-native-video-processor'
+import VideoManager from '@salihgun/react-native-video-processor'
 
 
-const result = await getVideoInfo(videoPath)
+const result = await VideoManager.getVideoInfo(videoPath)
 
-//example result
+// example result
 // result = {
 //  duration: 4.5,
 //  creationDate: "2022-11-11T19:08:08.547Z",
@@ -88,9 +88,9 @@ const result = await getVideoInfo(videoPath)
 </p>
 
 ```js
-import { createThumbnail } from '@salihgun/react-native-video-processor'
+import VideoManager from '@salihgun/react-native-video-processor'
 
-const thumbnailPath = await createThumbnail(videoPath)
+const thumbnailPath = await VideoManager.createThumbnail(videoPath)
 ```
 
 
@@ -101,12 +101,12 @@ const thumbnailPath = await createThumbnail(videoPath)
 </p>
 
 ```js
-import { trimVideo } from '@salihgun/react-native-video-processor'
+import VideoManager from '@salihgun/react-native-video-processor'
 
 const [startTime, setStartTime] = React.useState<string>('');
 const [duration, setDuration] = React.useState<string>('');
 
-const clippedVideo = await trimVideo(video?.path, startTime, duration)
+const clippedVideoPath = await VideoManager.trimVideo(videoPath, startTime, duration)
 ```
 
 <p align="center">Create Frames of a Video</p>
@@ -116,12 +116,12 @@ const clippedVideo = await trimVideo(video?.path, startTime, duration)
 </p>
 
 ```js
-import { createFrames } from '@salihgun/react-native-video-processor'
+import VideoManager from '@salihgun/react-native-video-processor'
 
-//createFrames function has two parameters. Video path and an optional fps value which is default 1
-const framesPath = await createFrames(videoPath, 3) // fps = 3
+// createFrames function has two parameters. Video path and an optional fps value which is default 1
+const framesPath = await VideoManager.createFrames(videoPath, 3) // fps = 3
 
-//render method
+// render method
  <ScrollView horizontal>
     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => {
         return (
@@ -143,25 +143,29 @@ const framesPath = await createFrames(videoPath, 3) // fps = 3
 </p>
 
 ```js
-import { reverseVideo } from '@salihgun/react-native-video-processor'
+import VideoManager from '@salihgun/react-native-video-processor'
 
-const reversedVideo = await reverseVideo(video.path)
+const reversedVideoPath = await VideoManager.reverseVideo(videoPath)
 
 ```
 
-<p align="center">Concat Videos</p>
+<p align="center">Merge Videos</p>
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47421572/207993209-39fd297d-bf04-4cc6-8832-641c6d32d056.gif" alt="animated" />
 </p>
 
 ```js
-import { concatVideos } from '@salihgun/react-native-video-processor';
+import VideoManager from '@salihgun/react-native-video-processor'
+import RNFS from "react-native-fs";
 
-//***IMPORTANT***
-//Video sizes,formats must be same for now otherwise it won't work!
-//Also supports only 2 videos for now!
-const mergedVideo = await concatVideos(videoPath1,videoPath2);
+// You can use RNFS to create a video path
+const outputPath = RNFS.DocumentDirectoryPath + "/mergedVideos.mp4";
+
+// There are two optional scale parameters to merge video
+// height and width default value is 1920x1080
+// you can change it if you need
+const mergedVideoPath = await VideoManager.mergeVideos(videoPathsArray,outputPath);
 
 ```
 
@@ -172,9 +176,10 @@ const mergedVideo = await concatVideos(videoPath1,videoPath2);
 </p>
 
 ```js
-import { boomerang } from '@salihgun/react-native-video-processor'
+import VideoManager from '@salihgun/react-native-video-processor'
 
-const boomerangVideo = await boomerang(video.path)
+// Set 'reorder' option to true if you want to reorder videos.
+const boomerangVideoPath = await VideoManager.boomerang(videoPath) // reorder = false
 
 ```
 

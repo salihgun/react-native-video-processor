@@ -13,6 +13,7 @@
     "moment": "^2.29.4",
     "react": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-fs": "^2.20.0",
     "react-native-image-crop-picker": "^0.38.1",
     "react-native-video": "^5.2.1"
   },

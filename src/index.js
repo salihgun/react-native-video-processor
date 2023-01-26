@@ -1,9 +1,2 @@
-export {
-  getVideoInfo,
-  createThumbnail,
-  trimVideo,
-  createFrames,
-  reverseVideo,
-  concatVideos,
-  boomerang,
-} from './functions/VideoFunctions';
+import { VideoManager } from './functions/VideoFunctions';
+export default VideoManager;

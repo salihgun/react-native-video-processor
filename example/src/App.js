@@ -11,17 +11,10 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import {
-  getVideoInfo,
-  createThumbnail,
-  trimVideo,
-  createFrames,
-  reverseVideo,
-  concatVideos,
-  boomerang,
-} from '@salihgun/react-native-video-processor';
+import VideoManager from '@salihgun/react-native-video-processor';
 import ImagePicker from 'react-native-image-crop-picker';
 import Video from 'react-native-video';
+import RNFS from 'react-native-fs';
 const width = Dimensions.get('window').width;
 export default function App() {
   const [videoInfo, setVideoInfo] = React.useState({
@@ -48,16 +41,22 @@ export default function App() {
   const onPickVideo = async () => {
     const video = await ImagePicker.openPicker({
       mediaType: 'video',
-      multiple: false,
+      multiple: true,
     });
+    const paths = video.map((item) => item.path);
     setLoading(true);
-    const videoInfoResponse = await getVideoInfo(video?.path);
-    const videoThumbnail = await createThumbnail(video.path);
-    const framePath = await createFrames(video.path, 5);
-    const clippedVideo = await trimVideo(video?.path, startTime, duration);
-    const reversedVideo = await reverseVideo(clippedVideo);
-    const mergedVideo = await concatVideos(video?.path, video?.path);
-    const boomerangVideo = await boomerang(video?.path);
+    const videoInfoResponse = await VideoManager.getVideoInfo(video[0]?.path);
+    const videoThumbnail = await VideoManager.createThumbnail(video[0]?.path);
+    const framePath = await VideoManager.createFrames(video[0]?.path, 5);
+    const clippedVideo = await VideoManager.trimVideo(
+      video[0]?.path,
+      startTime,
+      duration
+    );
+    const reversedVideo = await VideoManager.reverseVideo(clippedVideo);
+    const newVideoPath = RNFS.DocumentDirectoryPath + '/newVideo.mp4';
+    const mergedVideo = await VideoManager.mergeVideos(paths, newVideoPath);
+    const boomerangVideo = await VideoManager.boomerang(video[0]?.path, true);
     setBoomerangVideoPath(boomerangVideo);
     setMergedVideoPath(mergedVideo);
     setReversedVideoPath(reversedVideo);
