@@ -12,6 +12,7 @@ import {
   Dimensions,
 } from 'react-native';
 import VideoManager, {
+  // TrimmerComponent,
   VideoInfoType,
 } from '@salihgun/react-native-video-processor';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
@@ -84,7 +85,11 @@ export default function App() {
     setVideoInfo(videoInfoResponse);
     setFramesPath(framePath);
     setLoading(false);
+    // setNewPath(video[0]?.path as string);
   };
+
+  // const [newPath, setNewPath] = React.useState<string>('');
+  // const [value, setValue] = React.useState<number>(0);
 
   return (
     <View style={styles.container}>
@@ -178,6 +183,19 @@ export default function App() {
           />
         )}
       </ScrollView>
+      <Pressable style={styles.buttonContainer} onPress={onPickVideo}>
+        <Text>Choose Video</Text>
+      </Pressable>
+      {/* {newPath !== '' && (
+        <TrimmerComponent
+          path={newPath}
+          seekValue={value}
+          setSeekValue={setValue}
+          framesPath={framesPath}
+          duration={videoInfo.duration}
+          clipDuration={1}
+        />
+      )} */}
       <Modal transparent visible={loading}>
         <View style={styles.modal}>
           <ActivityIndicator size={50} />

@@ -65,7 +65,10 @@ export default function App() {
     setVideoInfo(videoInfoResponse);
     setFramesPath(framePath);
     setLoading(false);
+    // setNewPath(video[0]?.path as string);
   };
+  // const [newPath, setNewPath] = React.useState<string>('');
+  // const [value, setValue] = React.useState<number>(0);
   return React.createElement(
     View,
     { style: styles.container },
@@ -178,6 +181,11 @@ export default function App() {
           paused: false,
           repeat: true,
         })
+    ),
+    React.createElement(
+      Pressable,
+      { style: styles.buttonContainer, onPress: onPickVideo },
+      React.createElement(Text, null, 'Choose Video')
     ),
     React.createElement(
       Modal,
