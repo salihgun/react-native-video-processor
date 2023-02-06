@@ -61,6 +61,9 @@ pod 'ffmpeg-kit-react-native', :subspecs => ['full-gpl-lts'], :podspec => '../no
 </p>
 
 ```js
+// ** Important! Please install react-native-video to run this component.
+// yarn add react-native-video
+
 import VideoManager, { TrimmerComponent } from '@salihgun/react-native-video-processor'
 
   // Use createFreames function to create frames for the video // fps=5 for the example
@@ -209,6 +212,20 @@ import VideoManager from '@salihgun/react-native-video-processor'
 
 // Set 'reorder' option to true if you want to reorder videos.
 const boomerangVideoPath = await VideoManager.boomerang(videoPath) // reorder = false
+
+```
+
+<p align="center">Set speed of the Video</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47421572/217052414-2658de1c-b186-4ba6-a7d4-1e1bb1a8737e.gif" alt="animated" />
+</p>
+
+```js
+import VideoManager from '@salihgun/react-native-video-processor'
+
+// Use speed property to set speed. Default is 1
+const speedVideoPath = await VideoManager.setSpeed(videoPath) // speed = 1
 
 ```
 

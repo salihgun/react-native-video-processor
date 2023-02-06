@@ -40,6 +40,9 @@ export default function App() {
   const [framesPath, setFramesPath] = React.useState<string>('');
   const [reversedVideoPath, setReversedVideoPath] = React.useState<string>('');
   const [mergedVideoPath, setMergedVideoPath] = React.useState<string>('');
+  // const [newPath, setNewPath] = React.useState<string>('');
+  // const [value, setValue] = React.useState<number>(0);
+  const [speedPath, setSpeedPath] = React.useState<string>('');
   const [boomerangVideoPath, setBoomerangVideoPath] =
     React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -77,6 +80,9 @@ export default function App() {
       true
     );
 
+    const speedVideo = await VideoManager.setSpeed(video[0]?.path as string, 4);
+
+    setSpeedPath(speedVideo);
     setBoomerangVideoPath(boomerangVideo);
     setMergedVideoPath(mergedVideo);
     setReversedVideoPath(reversedVideo);
@@ -87,9 +93,6 @@ export default function App() {
     setLoading(false);
     // setNewPath(video[0]?.path as string);
   };
-
-  // const [newPath, setNewPath] = React.useState<string>('');
-  // const [value, setValue] = React.useState<number>(0);
 
   return (
     <View style={styles.container}>
@@ -182,11 +185,21 @@ export default function App() {
             repeat={true}
           />
         )}
+        <Text style={styles.title}>Speed Video</Text>
+        {speedPath !== '' && (
+          <Video
+            source={{ uri: speedPath }}
+            style={styles.video}
+            resizeMode="contain"
+            paused={false}
+            repeat={true}
+          />
+        )}
       </ScrollView>
-      <Pressable style={styles.buttonContainer} onPress={onPickVideo}>
+      {/*   <Pressable style={styles.buttonContainer} onPress={onPickVideo}>
         <Text>Choose Video</Text>
       </Pressable>
-      {/* {newPath !== '' && (
+     {newPath !== '' && (
         <TrimmerComponent
           path={newPath}
           seekValue={value}

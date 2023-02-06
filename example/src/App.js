@@ -36,6 +36,9 @@ export default function App() {
   const [framesPath, setFramesPath] = React.useState('');
   const [reversedVideoPath, setReversedVideoPath] = React.useState('');
   const [mergedVideoPath, setMergedVideoPath] = React.useState('');
+  // const [newPath, setNewPath] = React.useState<string>('');
+  // const [value, setValue] = React.useState<number>(0);
+  const [speedPath, setSpeedPath] = React.useState('');
   const [boomerangVideoPath, setBoomerangVideoPath] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const onPickVideo = async () => {
@@ -57,6 +60,8 @@ export default function App() {
     const newVideoPath = RNFS.DocumentDirectoryPath + '/newVideo.mp4';
     const mergedVideo = await VideoManager.mergeVideos(paths, newVideoPath);
     const boomerangVideo = await VideoManager.boomerang(video[0]?.path, true);
+    const speedVideo = await VideoManager.setSpeed(video[0]?.path, 4);
+    setSpeedPath(speedVideo);
     setBoomerangVideoPath(boomerangVideo);
     setMergedVideoPath(mergedVideo);
     setReversedVideoPath(reversedVideo);
@@ -67,8 +72,6 @@ export default function App() {
     setLoading(false);
     // setNewPath(video[0]?.path as string);
   };
-  // const [newPath, setNewPath] = React.useState<string>('');
-  // const [value, setValue] = React.useState<number>(0);
   return React.createElement(
     View,
     { style: styles.container },
@@ -180,12 +183,16 @@ export default function App() {
           resizeMode: 'contain',
           paused: false,
           repeat: true,
+        }),
+      React.createElement(Text, { style: styles.title }, 'Speed Video'),
+      speedPath !== '' &&
+        React.createElement(Video, {
+          source: { uri: speedPath },
+          style: styles.video,
+          resizeMode: 'contain',
+          paused: false,
+          repeat: true,
         })
-    ),
-    React.createElement(
-      Pressable,
-      { style: styles.buttonContainer, onPress: onPickVideo },
-      React.createElement(Text, null, 'Choose Video')
     ),
     React.createElement(
       Modal,
