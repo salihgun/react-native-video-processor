@@ -83,5 +83,14 @@ export class VideoManager {
     await this.mergeVideos(pathList, `${outputPath}`);
     return outputPath;
   }
+  static async setSpeed(path, speed = 1) {
+    const newPath = this.formatPath(path);
+    const outputPath = `${newPath}_slow.mp4`;
+    const command = `-i ${path} -filter:v "setpts=${
+      1 / speed
+    }*PTS" ${outputPath}`;
+    await FFmpegKit.execute(command);
+    return outputPath;
+  }
 }
 export default VideoManager;

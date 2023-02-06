@@ -12,6 +12,7 @@ import {
   Dimensions,
 } from 'react-native';
 import VideoManager, {
+  // TrimmerComponent,
   VideoInfoType,
 } from '@salihgun/react-native-video-processor';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
@@ -39,6 +40,9 @@ export default function App() {
   const [framesPath, setFramesPath] = React.useState<string>('');
   const [reversedVideoPath, setReversedVideoPath] = React.useState<string>('');
   const [mergedVideoPath, setMergedVideoPath] = React.useState<string>('');
+  // const [newPath, setNewPath] = React.useState<string>('');
+  // const [value, setValue] = React.useState<number>(0);
+  const [speedPath, setSpeedPath] = React.useState<string>('');
   const [boomerangVideoPath, setBoomerangVideoPath] =
     React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -76,6 +80,9 @@ export default function App() {
       true
     );
 
+    const speedVideo = await VideoManager.setSpeed(video[0]?.path as string, 4);
+
+    setSpeedPath(speedVideo);
     setBoomerangVideoPath(boomerangVideo);
     setMergedVideoPath(mergedVideo);
     setReversedVideoPath(reversedVideo);
@@ -84,6 +91,7 @@ export default function App() {
     setVideoInfo(videoInfoResponse);
     setFramesPath(framePath);
     setLoading(false);
+    // setNewPath(video[0]?.path as string);
   };
 
   return (
@@ -177,7 +185,30 @@ export default function App() {
             repeat={true}
           />
         )}
+        <Text style={styles.title}>Speed Video</Text>
+        {speedPath !== '' && (
+          <Video
+            source={{ uri: speedPath }}
+            style={styles.video}
+            resizeMode="contain"
+            paused={false}
+            repeat={true}
+          />
+        )}
       </ScrollView>
+      {/*   <Pressable style={styles.buttonContainer} onPress={onPickVideo}>
+        <Text>Choose Video</Text>
+      </Pressable>
+     {newPath !== '' && (
+        <TrimmerComponent
+          path={newPath}
+          seekValue={value}
+          setSeekValue={setValue}
+          framesPath={framesPath}
+          duration={videoInfo.duration}
+          clipDuration={1}
+        />
+      )} */}
       <Modal transparent visible={loading}>
         <View style={styles.modal}>
           <ActivityIndicator size={50} />
