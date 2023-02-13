@@ -196,7 +196,9 @@ const outputPath = RNFS.DocumentDirectoryPath + "/mergedVideos.mp4";
 
 // There are two optional scale parameters to merge video
 // height and width default value is 1920x1080
-// you can change it if you need
+// you can change it if you need.
+// There is also an optional "hasAudio" parameter and default value is true.
+// If one of your videos has no audio, merge doesn't work in this version.
 const mergedVideoPath = await VideoManager.mergeVideos(videoPathsArray,outputPath);
 
 ```
@@ -211,6 +213,7 @@ const mergedVideoPath = await VideoManager.mergeVideos(videoPathsArray,outputPat
 import VideoManager from '@salihgun/react-native-video-processor'
 
 // Set 'reorder' option to true if you want to reorder videos.
+// There are height and width parameters now. You can set a custom height and/or width.
 const boomerangVideoPath = await VideoManager.boomerang(videoPath) // reorder = false
 
 ```
